@@ -5,6 +5,7 @@ import (
 	"crud-shit/pkg/handler"
 	"crud-shit/pkg/repository"
 	"crud-shit/pkg/service"
+
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -40,7 +41,7 @@ func main() {
 	srv := new(todo.Server)
 	err = srv.Run(viper.GetString("port"), handlers.InitRoutes())
 	if err != nil {
-		logrus.Fatal(err.Error)
+		logrus.Fatal(err.Error())
 	}
 }
 
