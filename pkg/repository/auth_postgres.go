@@ -3,6 +3,7 @@ package repository
 import (
 	"crud-shit/models"
 	"fmt"
+
 	"github.com/jmoiron/sqlx"
 )
 
@@ -22,4 +23,13 @@ func (r *AuthPostgres) CreateUser(user models.User) (int, error) {
 		return 0, err
 	}
 	return id, nil
+}
+
+func (r *AuthPostgres) GetUser(username, password string) (models.User, error) {
+	var user models.User
+	queryString := "SELECT id FROM %s WHERE username=$1 AND password_hash=$2"
+	query := fmt.Sprintf(queryString, usersTable)
+	err := r.db.Get(&user, query, username, password)
+
+	return user, err
 }
